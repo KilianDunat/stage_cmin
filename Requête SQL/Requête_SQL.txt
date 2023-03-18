@@ -1,0 +1,134 @@
+﻿Requêtes SQL
+Sur le base de données de GLPI
+
+Final
+SELECT D.serial, D.name, S.completename, G.warranty_duration, G.warranty_date, CONCAT(U.firstname,' ' ,U.realname) as nom
+FROM glpi_networkequipments D
+LEFT JOIN glpi_users U
+ON U.id=D.users_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='NetworkEquipment' AND G.items_id=D.id)
+LEFT JOIN glpi_states S
+ON S.id=D.states_id
+WHERE D.name LIKE 'WD%' 
+OR D.name LIKE 'D%'
+ORDER BY U.realname
+
+Améliorer
+SELECT D.serial, D.name, S.completename, G.warranty_duration, G.warranty_date, CONCAT(U.firstname,' ' ,U.realname) as nom
+FROM glpi_networkequipments D
+LEFT JOIN glpi_users U
+ON U.id=D.users_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='NetworkEquipment' AND G.items_id=D.id)
+LEFT JOIN glpi_states S
+ON S.id=D.states_id
+LEFT JOIN glpi_networkequipmenttypes T
+ON T.id=D.networkequipmenttypes_id
+WHERE T.name='Dock'
+ORDER BY U.realname
+
+Grouper (Attention manque des modèle)
+SELECT GROUP_CONCAT(D.serial SEPARATOR ', ') AS num_série, D.name, G.warranty_duration, G.warranty_date
+FROM glpi_networkequipments D
+LEFT JOIN glpi_users U
+ON U.id=D.users_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='NetworkEquipment' AND G.items_id=D.id)
+LEFT JOIN glpi_states S
+ON S.id=D.states_id
+LEFT JOIN glpi_networkequipmenttypes T
+ON T.id=D.networkequipmenttypes_id
+WHERE T.name='Dock'
+GROUP BY G.warranty_date
+
+Requête SQL pour voir si nous avions bien entrer la garantie, la commande et la valeur. (Dock)
+SELECT GROUP_CONCAT(D.serial SEPARATOR ', ') AS num_série, GROUP_CONCAT(D.name), G.warranty_duration, G.warranty_date, COUNT(*)
+FROM glpi_networkequipments D
+INNER JOIN glpi_infocoms G
+ON (G.itemtype='NetworkEquipment' AND G.items_id=D.id)
+INNER JOIN glpi_networkequipmenttypes T
+ON (T.id=D.networkequipmenttypes_id AND T.name='Dock')
+WHERE G.warranty_duration=0
+OR G.warranty_date is null
+OR G.order_number is null
+OR G.warranty_info is null
+OR G.value is null
+OR G.bill is null
+OR G.delivery_date is null
+OR G.suppliers_id=0
+GROUP BY G.warranty_date
+
+Requête SQL pour voir si nous avions bien entrer la garantie, la commande et la valeur. (Ordinateur)
+SELECT O.serial, O.name, S.completename, G.warranty_duration, G.warranty_date, CONCAT(U.firstname,' ' ,U.realname) as nom
+FROM glpi_computers O
+LEFT JOIN glpi_users U
+ON U.id=O.users_id
+LEFT JOIN glpi_states S
+ON S.id=O.states_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='Computer' AND G.items_id=O.id)
+WHERE G.warranty_duration=0
+OR G.warranty_date is null
+OR G.order_number is null
+OR G.warranty_info is null
+OR G.value is null
+OR G.bill is null
+OR G.delivery_date is null
+OR G.suppliers_id=0
+OR G.decommission_date is null
+ORDER BY U.realname
+
+OU vérifier que la date de réforme ne soit pas dépassé ou quel soit entrer
+SELECT O.serial, O.name, S.completename, G.warranty_duration, G.warranty_date, CONCAT(U.firstname,' ' ,U.realname) as nom
+FROM glpi_computers O
+LEFT JOIN glpi_users U
+ON U.id=O.users_id
+LEFT JOIN glpi_states S
+ON S.id=O.states_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='Computer' AND G.items_id=O.id)
+WHERE G.decommission_date<NOW()
+OR G.decommission_date is null
+ORDER BY U.realname
+
+Grouper (Attention manque des modèle et cette requête est pour les ordinateurs)
+SELECT GROUP_CONCAT(O.serial SEPARATOR ', ') AS num_série, GROUP_CONCAT(M.name SEPARATOR ', ') AS nom, G.warranty_duration AS duree_garantie, G.warranty_date AS date_debut_garantie, COUNT(*) AS nbr_commande
+FROM glpi_computers O
+LEFT JOIN glpi_users U
+ON U.id=O.users_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='Computer' AND G.items_id=O.id)
+LEFT JOIN glpi_computermodels M
+ON M.id=O.computermodels_id
+WHERE O.name!=''
+AND O.name!='Decaps'
+AND O.name!='chcesbron'
+GROUP BY G.warranty_date
+
+Requête pour voir tous
+SELECT GROUP_CONCAT(O.serial SEPARATOR ', ') AS num_série, GROUP_CONCAT(M.name SEPARATOR ', ') AS nom, GROUP_CONCAT(G.warranty_duration) AS duree_garantie, G.warranty_date AS date_debut_garantie, COUNT(*) AS nbr_commande
+FROM glpi_computers O
+LEFT JOIN glpi_users U
+ON U.id=O.users_id
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='Computer' AND G.items_id=O.id)
+LEFT JOIN glpi_computermodels M
+ON M.id=O.computermodels_id
+WHERE O.name!=''
+AND O.name!='Decaps'
+AND O.name!='chcesbron'
+GROUP BY G.warranty_date
+
+
+Grouper (Attention manque des modèle et cette requête est pour les moniteurs)
+SELECT GROUP_CONCAT(M.serial SEPARATOR ', ') AS num_série, M.name, G.warranty_duration, G.warranty_date
+FROM glpi_monitors M
+LEFT JOIN glpi_infocoms G
+ON (G.itemtype='Monitor' AND G.items_id=M.id)
+LEFT JOIN glpi_states S
+ON S.id=M.states_id
+LEFT JOIN glpi_networkequipmenttypes T
+ON T.id=M.monitortypes_id
+GROUP BY G.warranty_date
+
