@@ -1,0 +1,3 @@
+﻿Get-ADUser -filter * -Properties msDS-ResultantPSO | Select-Object Name, distinguishedName, msDS-ResultantPSO | Where-Object msDS-ResultantPSO -eq $null | Export-Csv .\list_user_notPSO.csv -notype -Encoding UTF8 -Delimiter ';' -Force
+
+Get-ADUser -filter * -Properties msDS-ResultantPSO | Select-Object Name, distinguishedName, msDS-ResultantPSO | Where-Object msDS-ResultantPSO -ne $null | Export-Csv .\list_user_PSO.csv -notype -Encoding UTF8 -Delimiter ';' -Force
