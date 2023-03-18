@@ -1,0 +1,1 @@
+﻿Get-ADUser -Filter { PasswordNeverExpires -eq $True } | Select-Object Name, distinguishedName | Export-Csv .\list_user_password_neverexpires.csv -notype -Encoding UTF8 -Delimiter ';' -Force

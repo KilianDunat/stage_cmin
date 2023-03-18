@@ -1,0 +1,1 @@
+﻿Get-ADGroup -Filter * -Property * | Select-Object Name, distinguishedName, msDS-PSOApplied | Export-Csv .\final2.csv -notype -Encoding UTF8 -Delimiter ',' -Force
