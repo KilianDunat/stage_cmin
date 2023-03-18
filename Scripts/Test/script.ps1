@@ -1,1 +1,0 @@
-﻿Get-ADComputer -Filter * -SearchBase 'OU=Computers,DC=celieno,DC=lan' -Properties *| Select-Object Name, @{Name='lastLogon';Expression={[DateTime]::FromFileTime($_.lastLogon)}} | Sort-Object lastLogon | Out-File -FilePath "C:\Computers.csv"

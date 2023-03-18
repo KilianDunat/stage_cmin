@@ -1,1 +1,0 @@
-﻿Get-ADUser -Filter {logonHours -eq null} | Select-Object Name, distinguishedName
