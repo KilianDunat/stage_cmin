@@ -92,16 +92,16 @@ if(($ou_ad -eq "2") -and ($networkAdapters.NetConnectionID -eq "Ethernet")){
 }#>
 
 Write-Host "Résumé des actions à venir :"
-Write-Host "OU AD choisie : OU=$choix_user,OU=Ordinateurs,DC=celieno,DC=lan"
+Write-Host "OU AD choisie : OU=$choix_user,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 Write-Host "Nouveau nom de l'ordinateur : $newComputerName"
-Write-Host "Connexion au domaine : celieno.lan"
+Write-Host "Connexion au domaine : XXXXXXX.XXX"
 Write-Host "Redémarrage de l'ordinateur pour appliquer les modifications."
 
 $confirm = Read-Host "Veuillez vérifier les informations ci-dessus et tapez 'Y' pour continuer, toute autre entrée pour annuler"
 if ($confirm -eq "Y") {
     $connected = $false
     while (-not $connected) {
-        $internetCheck = Test-Connection -ComputerName celieno.lan -Count 1 -Quiet
+        $internetCheck = Test-Connection -ComputerName XXXXXXX.XXX -Count 1 -Quiet
         if ($internetCheck) {
             $route = Get-NetRoute -DestinationPrefix 0.0.0.0/0
             While($route -eq $null) {
@@ -110,7 +110,7 @@ if ($confirm -eq "Y") {
 
             Rename-Computer -NewName $newComputerName
 
-            Add-Computer -DomainName "celieno.lan" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=celieno,DC=lan"
+            Add-Computer -DomainName "XXXXXXX.XXX" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 
             Restart-Computer
             $connected = $true
@@ -127,7 +127,7 @@ if ($confirm -eq "Y") {
 <#
 $connected = $false
 while (-not $connected) {
-    $internetCheck = Test-Connection -ComputerName celieno.lan -Count 1 -Quiet
+    $internetCheck = Test-Connection -ComputerName XXXXXXX.XXX -Count 1 -Quiet
     if ($internetCheck) {
         $route = Get-NetRoute -DestinationPrefix 0.0.0.0/0
         While($route -eq $null) {
@@ -136,7 +136,7 @@ while (-not $connected) {
 
         Rename-Computer -NewName $newComputerName
 
-        Add-Computer -DomainName "celieno.lan" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=celieno,DC=lan"
+        Add-Computer -DomainName "XXXXXXX.XXX" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 
         Restart-Computer
         $connected = $true

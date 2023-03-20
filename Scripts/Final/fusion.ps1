@@ -1,4 +1,4 @@
-﻿$PathToSetup = "\\storage.celieno.lan\commun\domain\glpi\"
+﻿$PathToSetup = "\\XXXXXXX\XXXXXX\XXXXXXX\glpi\"
 $SetupName = "fusioninventory-agent_windows-x64_2.6.exe"
 $SetupOptions = "/S /acceptlicense /installtasks=Collect,Deploy,Inventory,WakeOnLan /ca-cert-file=C:\Program Files\FusionInventory-Agent\certs\chain.pem /add-firewall-exception /ssl-check /execmode=service /runnow"
 $GLPIUri = "https://glpi.cmin.fr/plugins/fusioninventory/"

@@ -1,5 +1,5 @@
 $date_heure = Get-Date
-$firewall = Get-NetFirewallRule | where DisplayName -Like "cmin*" | where Group -Like $null
+$firewall = Get-NetFirewallRule | where DisplayName -Like "XXXX*" | where Group -Like $null
 $computer = $env:COMPUTERNAME
 $nbrrule = 0
 $tries = 1
@@ -22,7 +22,7 @@ $output += " $nbrrule rules deleted."
 while ($tries -le 30) {
     try {
     $output2 = $output + " (Tries $($tries))"
-    $output2 | Out-File -FilePath \\storage.celieno.lan\commun\logfw\$computer.log -Append
+    $output2 | Out-File -FilePath \\XXXXXXX\XXXXXX\XXXXX\$computer.log -Append
     break
     }
     catch {

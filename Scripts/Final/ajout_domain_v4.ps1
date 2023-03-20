@@ -6,25 +6,25 @@ $testremoved = 0
 $haserrors = $false
 
 if ($ComputerName -like "LAPTOP-*") {
-    $ou = "OU=Portables,OU=Ordinateurs,DC=celieno,DC=lan"
+    $ou = "OU=Portables,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 } elseif ($ComputeName -like "DESKTOP-*") {
-    $ou = "OU=Postes,OU=Ordinateurs,DC=celieno,DC=lan"
+    $ou = "OU=Postes,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 } else {
-    $ou = "OU=Ordinateurs,DC=celieno,DC=lan"
+    $ou = "OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
     return
 }
 
 Write-Host "Résumé des actions à venir :"
 Write-Host "OU AD choisie : $ou"
 Write-Host "Nom de l'ordinateur : $ComputerName"
-Write-Host "Connexion au domaine : celieno.lan"
+Write-Host "Connexion au domaine : XXXXXXX.XXX"
 Write-Host "Redémarrage de l'ordinateur pour appliquer les modifications."
 $confirm = Read-Host "Veuillez vérifier les informations ci-dessus et tapez 'Y' pour continuer, toute autre entrée pour annuler"
 
 if ($confirm -eq "Y") {
     $connected = $false
     while (-not $connected) {
-        $internetCheck = Test-Connection -ComputerName celieno.lan -Count 1 -Quiet
+        $internetCheck = Test-Connection -ComputerName XXXXXXX.XXX -Count 1 -Quiet
         if (($internetCheck) -and ($test -gt 0)){
             $testremoved = 0
             $defaultRouteRemoved = $false
@@ -46,7 +46,7 @@ if ($confirm -eq "Y") {
                 return
             }
             try{
-            Add-Computer -DomainName "celieno.lan" -OUPath $ou
+            Add-Computer -DomainName "XXXXXXX.XXX" -OUPath $ou
             }
             catch {
             $output += " error : $($_.Exception.Message)"

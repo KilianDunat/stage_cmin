@@ -19,14 +19,14 @@ Rename-Computer -NewName $namecomputer
 
 $connected = $false
 while (-not $connected) {
-    $internetCheck = Test-Connection -ComputerName celieno.lan -Count 1 -Quiet
+    $internetCheck = Test-Connection -ComputerName XXXXXXX.XXX -Count 1 -Quiet
     if ($internetCheck) {
         $route = Get-NetRoute -DestinationPrefix 0.0.0.0/0
         While($route -eq $null) {
             delete route 0.0.0.0
         }
 
-        Add-Computer -DomainName "celieno.lan" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=celieno,DC=lan"
+        Add-Computer -DomainName "XXXXXXX.XXX" -OUPath "OU=$choix_user,OU=Ordinateurs,DC=XXXXXXX,DC=XXX"
 
         Restart-Computer
         $connected = $true

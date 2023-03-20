@@ -5,8 +5,8 @@ If($null -eq $chemin)
 {
   $chemin = ".\liste_Ordi_AD.csv"
 }
-$OUList = @("OU=Ordinateurs,DC=celieno,DC=lan",
-            "CN=Computers,DC=celieno,DC=lan")
+$OUList = @("OU=Ordinateurs,DC=XXXXXXX,DC=XXX",
+            "CN=Computers,DC=XXXXXXX,DC=XXX")
 $Computers = Foreach($OU in $OUList){
     Get-ADComputer -Filter * -SearchBase $OU -Properties lastLogon | Select-Object Name, lastLogon, distinguishedName
 }
