@@ -1,4 +1,4 @@
-﻿Requêtes SQL
+Requêtes SQL
 Sur le base de données de GLPI
 
 Final
@@ -102,8 +102,8 @@ ON (G.itemtype='Computer' AND G.items_id=O.id)
 LEFT JOIN glpi_computermodels M
 ON M.id=O.computermodels_id
 WHERE O.name!=''
-AND O.name!='Decaps'
-AND O.name!='chcesbron'
+AND O.name!='XXXXXX'
+AND O.name!='XXXXXXXXX'
 GROUP BY G.warranty_date
 
 Requête pour voir tous
@@ -116,8 +116,8 @@ ON (G.itemtype='Computer' AND G.items_id=O.id)
 LEFT JOIN glpi_computermodels M
 ON M.id=O.computermodels_id
 WHERE O.name!=''
-AND O.name!='Decaps'
-AND O.name!='chcesbron'
+AND O.name!='XXXXXX'
+AND O.name!='XXXXXXXXX'
 GROUP BY G.warranty_date
 
 
