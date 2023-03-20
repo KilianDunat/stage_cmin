@@ -14,7 +14,7 @@ Foreach($Utilisateur in $CSVData){
 
     $UtilisateurLogin = $UtilisateurPrenom.ToLower() + "." + $UtilisateurNom.ToLower() 
 
-    $UtilisateurEmail = "$UtilisateurLogin@corp.kilian.com" 
+    $UtilisateurEmail = "$UtilisateurLogin@lan.test.fr" 
 
     $UtilisateurMotDePasse = "P@ssw0rd" 
 
@@ -48,13 +48,13 @@ Foreach($Utilisateur in $CSVData){
 
                     -SamAccountName $UtilisateurLogin ` 
 
-                    -UserPrincipalName "$UtilisateurLogin@corp.kilian.com" ` 
+                    -UserPrincipalName "$UtilisateurLogin@lan.test.fr" ` 
 
                     -EmailAddress $UtilisateurEmail ` 
 
                     -Title $UtilisateurFonction ` 
 
-                    -Path "OU=Utilisateurs,OU=$UtilisateurService,OU=Service,DC=corp,DC=kilian,DC=com" ` 
+                    -Path "OU=Utilisateurs,OU=$UtilisateurService,OU=Service,DC=lan,DC=test,DC=fr" ` 
 
                     -AccountPassword(ConvertTo-SecureString $UtilisateurMotDePasse -AsPlainText -Force) ` 
 
