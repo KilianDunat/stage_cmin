@@ -1,4 +1,4 @@
-/* Requête SQL pour récupérer les clé et mot de passe BitLocker */
+/*Requête SQL permettant de voir quels ordinateurs et quand ils se sont connectés dernièrement au serveur WSUS*/
 
 Select cd.ComputerModel as Mod�le, cd.BiosVersion, c.FullDomainName as Nom, c.LastReportedStatusTime
 From tbComputerTargetDetail as cd
